@@ -1,20 +1,22 @@
 ---
 - hosts: servers
   remote_user: ubuntu
-
+  vars:
+  - timestamp: "{{ansible_date_time.epoch}}"
   tasks:
   - name: copy Intel MLC
     copy:
-      src: mlc_v3.6.tgz
+      src: ./files/mlc_v3.6.tgz
       dest: /home/ubuntu/mlc_v3.6.tgz 
   - name: extract MLC 
-    shell: tar xvzf mlc_v3.6.tgz
+    shell: tar xvzf /home/ubuntu/mlc_v3.6.tgz -C /home/ubuntu
   - name: load MSR deiver
     shell: modprobe msr
     become: yes
   - name: run benchmark
-    shell: ./Linux/mlc -e > res_{{ansible_hostname}}.txt
+    shell: /home/ubuntu/Linux/mlc -e > res_{{ansible_hostname}}_{{timestamp}}.txt
   - name: collect stats
     fetch:
-      src: res_{{ansible_hostname}}.txt
+      src: res_{{ansible_hostname}}_{{timestamp}}.txt
       dest: stats
+
