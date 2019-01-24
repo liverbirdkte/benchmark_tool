@@ -13,10 +13,7 @@
   - name: load MSR deiver
     shell: modprobe msr
     become: yes
-  - name: run benchmark
-    shell: /home/ubuntu/Linux/mlc -e > res_{{ansible_hostname}}_{{timestamp}}.txt
-  - name: collect stats
-    fetch:
-      src: res_{{ansible_hostname}}_{{timestamp}}.txt
-      dest: stats
-
+  - include: local_tasks.yml
+    with_nested:
+    - ["{{ansible_hostname}}"]
+    - ["1_{{timestamp}}","2_{{timestamp}}","3_{{timestamp}}"]
