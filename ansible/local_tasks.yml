@@ -1,0 +1,2 @@
+- name: run benchmark
+  shell: /home/ubuntu/Linux/mlc -e > res_{{item[0]}}_{{item[1]}}.txt

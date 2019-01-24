@@ -18,4 +18,3 @@
     fetch:
       src: res_{{ansible_hostname}}.txt
       dest: stats
-
