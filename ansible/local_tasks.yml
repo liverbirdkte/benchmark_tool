@@ -1,7 +1,2 @@
 - name: run benchmark
   shell: /home/ubuntu/Linux/mlc -e > res_{{item[0]}}_{{item[1]}}.txt
-- name: collect stats
-  fetch:
-    src: res_{{item[0]}}_{{item[1]}}.txt
-    dest: stats
-
